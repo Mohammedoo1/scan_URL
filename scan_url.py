@@ -1,6 +1,6 @@
 import streamlit as st
 import vt
-
+import requests as re
 API = "f201bfdb4e779f527e33ef7c05749409292f1976fcfa59899a3383cb02f00754"
 
 st.title("welcome in  Scan URL ")
@@ -64,6 +64,7 @@ def scan(URL):
 
 if st.button("Click me to start scanning"):
     scan(URL)
+
 
 
 
