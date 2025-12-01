@@ -8,6 +8,9 @@ API =st.secrets["API_virus"]
 st.title(" Scan URL ")
 
 URL = st.text_input("enter your URl :")
+if not URL:
+    st.warning("❌ Please enter a URL before scanning.")
+    st.stop()
 
 client = vt.Client(API)
 
@@ -106,4 +109,5 @@ if st.button("Click me to start scanning"):
         with col2:
             st.subheader("🛡️ VirusTotal Scan")
             scan(URL)
+
 
