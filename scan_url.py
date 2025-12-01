@@ -2,18 +2,19 @@ import streamlit as st
 import vt
 import requests as rq
 
+
 st.markdown(
     '<meta name="google-site-verification" content="0d09cp10RGMkKaNQ0UUZBNgEt0h7ziRriDUnoe3JAfM" />',
     unsafe_allow_html=True
 )
 
-API_KEY =st.secrets["API_google"]
-API =st.secrets["API_virus"]
 
-st.title(" Scan URL 🔍 ")
+API_KEY = st.secrets["API_google"]
+API = st.secrets["API_virus"]
+
+st.title(" Scan URL ")
 
 URL = st.text_input("enter your URl :")
-
 client = vt.Client(API)
 
 danger_words = [
@@ -26,11 +27,7 @@ danger_words = [
     "spam",
     "dangerous",
 ]
-st.set_page_config(
-    page_title="Secure Link",
-    page_icon="🛡️",
-    layout="centered",
-)
+
 
 def scan_g(URL):
     try:
@@ -54,13 +51,14 @@ def scan_g(URL):
         if "matches" in result:
             st.error("⚠ Google Safe Browsing: Dangerous")
             return "dangerous"
-            st.write(result["matches"])
+
         else:
             st.success("✔ Google Safe Browsing: Safe")
             return "safe"
 
     except Exception as e:
         st.write(e)
+
 
 def scan(URL):
     client = vt.Client(API)
@@ -104,20 +102,24 @@ def scan(URL):
             st.success("safe")
             return "safe"
         st.table(tables)
-    except :
-         return "safe"
-choose=st.radio("choose where you want to check your link :",["virous total" , "google", "both"])
+    except Exception as e:
+        st.write(e)
+
+
+choose = st.radio("choose where you want to check your link :",
+                  ["🛡️ VirusTotal Scan", "🔍 Google Safe Browsing Scan", "Both (for deep scan)"])
 
 if st.button("Click me to start scanning"):
-     if not URL:
+    if not URL:
         st.warning("❌ Please enter a URL before scanning.")
         st.stop()
-    if choose == "virous total":
+
+    if choose == "🛡️ VirusTotal Scan":
         scan(URL)
-    elif choose == "google":
+    elif choose == "🔍 Google Safe Browsing Scan":
         scan_g(URL)
-    elif choose == "both":
-        col1 , col2 = st.columns(2)
+    elif choose == "Both (for deep scan)":
+        col1, col2 = st.columns(2)
         with col1:
             st.subheader("🔍 Google Safe Browsing")
             g = scan_g(URL)
@@ -126,10 +128,3 @@ if st.button("Click me to start scanning"):
             v = scan(URL)
         if g != v:
             st.warning("⚠ Maybe it is risky, don't open it ")
-
-
-
-
-
-
-
