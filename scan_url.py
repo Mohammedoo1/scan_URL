@@ -1,13 +1,14 @@
+
 import streamlit as st
 import vt
 import requests as rq
-
-API_KEY =st.secrets["API_google"]
-API =st.secrets["API_virus"]
+API_KEY = API_google
+API = API_virus
 
 st.title(" Scan URL ")
 
 URL = st.text_input("enter your URl :")
+
 client = vt.Client(API)
 
 danger_words = [
@@ -41,9 +42,11 @@ def scan_g(URL):
 
         if "matches" in result:
             st.error("⚠ Google Safe Browsing: Dangerous")
+            return "dangerous"
             st.write(result["matches"])
         else:
             st.success("✔ Google Safe Browsing: Safe")
+            return "safe"
 
     except Exception as e:
         st.write(e)
@@ -84,31 +87,28 @@ def scan(URL):
 
         if is_dangerous:
             st.error("dangerous")
+            return "dangerous"
+
         else:
             st.success("safe")
+            return "safe"
         st.table(tables)
-    except Exception as e:
-        st.write(e)
-
-choose=st.radio("choose where you want to check your link :",["🛡️ VirusTotal Scan" , "🔍 Google Safe Browsing Scan", "Both (for deep scan)"])
+    except :
+         return "safe"
+choose=st.radio("choose where you want to check your link :",["virous total" , "google", "both"])
 
 if st.button("Click me to start scanning"):
-    if not URL:
-       st.warning("❌ Please enter a URL before scanning.")
-       st.stop()
-    
-    if choose == "🛡️ VirusTotal Scan":
+    if choose == "virous total":
         scan(URL)
-    elif choose == "🔍 Google Safe Browsing Scan":
+    elif choose == "google":
         scan_g(URL)
-    elif choose == "Both (for deep scan)":
+    elif choose == "both":
         col1 , col2 = st.columns(2)
         with col1:
             st.subheader("🔍 Google Safe Browsing")
-            scan_g(URL)
+            g = scan_g(URL)
         with col2:
             st.subheader("🛡️ VirusTotal Scan")
-            scan(URL)
-
-
-
+            v = scan(URL)
+        if g != v:
+            st.warning("⚠ Maybe it is risky, don't open it ")
