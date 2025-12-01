@@ -6,7 +6,7 @@ import requests as rq
 API_KEY =st.secrets["API_google"]
 API =st.secrets["API_virus"]
 
-st.title(" Scan URL ")
+st.title(" Scan URL 🔍 ")
 
 URL = st.text_input("enter your URl :")
 
@@ -23,7 +23,7 @@ danger_words = [
     "dangerous",
 ]
 st.set_page_config(
-    page_title="Scan URL",
+    page_title="Secure Link",
     page_icon="🛡️",
     layout="centered",
 )
@@ -119,5 +119,6 @@ if st.button("Click me to start scanning"):
             v = scan(URL)
         if g != v:
             st.warning("⚠ Maybe it is risky, don't open it ")
+
 
 
