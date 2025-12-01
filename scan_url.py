@@ -1,9 +1,9 @@
-
 import streamlit as st
 import vt
 import requests as rq
-API_KEY =st.secrets["API_google"]
-API =st.secrets["API_virus"]
+
+API_KEY = API_google
+API = API_virus
 
 st.title(" Scan URL ")
 
@@ -91,14 +91,18 @@ def scan(URL):
     except Exception as e:
         st.write(e)
 
-choose=st.radio("choose where you want to check your link :",["virous total" , "google", "both"])
+choose=st.radio("choose where you want to check your link :",["🛡️ VirusTotal Scan" , "🔍 Google Safe Browsing Scan", "Both (for deep scan)"])
 
 if st.button("Click me to start scanning"):
-    if choose == "virous total":
+    if choose == "🛡️ VirusTotal Scan":
         scan(URL)
-    elif choose == "google":
+    elif choose == "🔍 Google Safe Browsing Scan":
         scan_g(URL)
-    elif choose == "both":
-        scan(URL)
-        scan_g(URL)
-
+    elif choose == "Both (for deep scan)":
+        col1 , col2 = st.columns(2)
+        with col1:
+            st.subheader("🔍 Google Safe Browsing")
+            scan_g(URL)
+        with col2:
+            st.subheader("🛡️ VirusTotal Scan")
+            scan(URL)
