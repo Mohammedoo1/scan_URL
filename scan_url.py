@@ -94,23 +94,25 @@ with tab1:
         ["🛡️ VirusTotal Scan", "🔍 Google Safe Browsing Scan", "Both (for deep scan)"]
     )
 
-    if st.button("Click me to start scanning"):
+    if st.button("start scanning"):
         if not URL:
             st.warning("❌ Please enter a URL before scanning.")
             st.stop()
 
         if choose == "🛡️ VirusTotal Scan":
             scan(URL)
-            st.table(tables)
+            if st.button("Click me if you want to see the deatiles"):
+                  table_re=scan(URL)
+                  st.table(table_re)
 
         elif choose == "🔍 Google Safe Browsing Scan":
             scan_g(URL)
+
         elif choose == "Both (for deep scan)":
             col1, col2 = st.columns(2)
             with col1:
                 st.subheader("🔍 Google Safe Browsing")
                 g = scan_g(URL)
-                st.table(tables)
             with col2:
                 st.subheader("🛡️ VirusTotal Scan")
                 v = scan(URL)
