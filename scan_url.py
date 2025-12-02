@@ -124,3 +124,16 @@ with tab1:
                 status_v ,_ = scan(URL)
             if status_g != status_v:
                 st.warning("⚠ Maybe it is risky, don't open it ")
+
+with tab2:
+     def showrtn_link():
+         st.title("short URL ")
+         uRL = st.text_input("enter URL:")
+
+         try:
+             if st.button("show the real link"):
+
+                 URl_info=rq.get(uRL)
+                 st.write(URl_info.url)
+         except Exception as e:
+             st.write(e)
