@@ -2,7 +2,12 @@ import streamlit as st
 import vt
 import requests as rq
 
-tab1, tab2 = st.tabs(["  Scan URL  ", "  فك الروابط المختصرة  "])
+st.set_page_config(
+    page_title="Secure Link",
+    page_icon="🛡️",   
+)
+
+tab1, tab2 = st.tabs(["  Scan URL  ", " Unshorten URL "])
 
 API_KEY = st.secrets["API_google"]
 API = st.secrets["API_virus"]
@@ -131,9 +136,10 @@ with tab2:
          uRL = st.text_input("enter URL:")
 
          try:
-             if st.button("show the real link"):
+             if st.button("Reveal Real Link"):
 
                  URl_info=rq.get(uRL)
                  st.write(URl_info.url)
          except Exception as e:
              st.write(e)
+
