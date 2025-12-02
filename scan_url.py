@@ -89,6 +89,10 @@ with tab1:
         except Exception as e:
             st.write(e)
 
+
+    if "vt_result" not in st.session_state:
+        st.session_state.vt_result = None
+
     choose = st.radio(
         "choose where you want to check your link :",
         ["🛡️ VirusTotal Scan", "🔍 Google Safe Browsing Scan", "Both (for deep scan)"]
@@ -98,11 +102,14 @@ with tab1:
         if not URL:
             st.warning("❌ Please enter a URL before scanning.")
             st.stop()
+        else:
+            st.session_state.vt_result = scan(URL)
 
         if choose == "🛡️ VirusTotal Scan":
-            status_v , tables_result = scan(URL)
-            if st.button("Click me if you want to see the deatiles"):
-                  st.table(tables_result)
+            if st.session_state.vt_result:
+                status, tables_result = st.session_state.vt_result
+                if st.button("Click me if you want to see the deatiles"):
+                    st.table(tables_result)
 
         elif choose == "🔍 Google Safe Browsing Scan":
             scan_g(URL)
