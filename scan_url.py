@@ -2,12 +2,7 @@ import streamlit as st
 import vt
 import requests as rq
 
-
-st.markdown(
-    '<meta name="google-site-verification" content="0d09cp10RGMkKaNQ0UUZBNgEt0h7ziRriDUnoe3JAfM" />',
-    unsafe_allow_html=True
-)
-
+tab1, tab2 = st.tabs(["فحص روابط", "فك الروابط المختصرة"])
 
 API_KEY = st.secrets["API_google"]
 API = st.secrets["API_virus"]
@@ -128,5 +123,6 @@ if st.button("Click me to start scanning"):
             v = scan(URL)
         if g != v:
             st.warning("⚠ Maybe it is risky, don't open it ")
+
 
 
