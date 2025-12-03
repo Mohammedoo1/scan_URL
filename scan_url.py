@@ -6,7 +6,10 @@ tab1,tab2 = st.tabs(["  Scan URL  ", "  Scan Fill "])
 
 API_KEY = st.secrets["API_google"]
 API = st.secrets["API_virus"]
-
+st.set_page_config(
+    page_title="Secure Link",
+    page_icon="🛡️"
+)
 with tab1:
     st.title(" Scan URL ")
 
@@ -124,7 +127,7 @@ with tab1:
             if status_g != status_v:
                 st.warning("⚠ Maybe it is risky, don't open it ")
 
-with tab2
+with tab2:
 
     st.title("Scan your File")
     max_file=30
@@ -139,11 +142,11 @@ with tab2
                     with vt.Client(API) as client:
                         analysis = client.scan_file(uploaded_file, wait_for_completion=True)
 
-        stats = analysis.stats
-        malicious = stats.get("malicious", 0)
-        suspicious = stats.get("suspicious", 0)
-        undetected = stats.get("undetected", 0)
-        harmless = stats.get("harmless", 0)
+                stats = analysis.stats
+                malicious = stats.get("malicious", 0)
+                suspicious = stats.get("suspicious", 0)
+                undetected = stats.get("undetected", 0)
+                harmless = stats.get("harmless", 0)
 
         if malicious > 0:
             st.error("⚠ It's a malicious file")
