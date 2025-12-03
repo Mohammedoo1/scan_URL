@@ -155,6 +155,7 @@ with tab2:
                 elif undetected > 0 and harmless > 0:
                    st.success("✔ It is save")
                 else:
-                   st.info("I am not ensure about the file")
+                   st.success("🟢 No threats detected by any engine (likely safe)")
+
 
 
