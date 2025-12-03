@@ -79,13 +79,16 @@ with tab1:
                     is_dangerous = True
                 else:
                     tables.append({"engine": engine, "Category": results, "status": "safe"})
-            st.table(tables)
 
             if is_dangerous:
                 st.error("dangerous")
+                st.table(tables)
+
                 return "dangerous"
             else:
                 st.success("safe")
+                st.table(tables)
+
                 return "safe"
 
         except Exception as e:
