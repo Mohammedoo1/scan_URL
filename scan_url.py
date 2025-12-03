@@ -148,13 +148,13 @@ with tab2:
                 undetected = stats.get("undetected", 0)
                 harmless = stats.get("harmless", 0)
 
-        if malicious > 0:
-            st.error("⚠ It's a malicious file")
-        elif suspicious > 0:
-            st.warning("⚠ It's a suspicious file")
-        elif undetected > 0 and harmless > 0:
-            st.success("✔ It is save")
-        else:
-            st.info("I am not ensure about the file")
+                if malicious > 0:
+                   st.error("⚠ It's a malicious file")
+                elif suspicious > 0:
+                   st.warning("⚠ It's a suspicious file")
+                elif undetected > 0 and harmless > 0:
+                   st.success("✔ It is save")
+                else:
+                   st.info("I am not ensure about the file")
 
 
