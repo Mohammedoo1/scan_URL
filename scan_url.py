@@ -16,9 +16,10 @@ API = st.secrets["API_virus"]
 with tab1:
     st.title(" Scan URL ")
     URL = st.text_input("enter your URl :")
-    if not URL.startswith("https://") or not URL.startswith("http://"):
+    if URL and not (URL.startswith("https://") or URL.startswith("http://")):
         st.error("Enter a valid URL")
         st.stop()
+
     danger_words = [
         "malicious",
         "phishing",
@@ -154,6 +155,7 @@ with tab2:
                    st.info("ℹ No engine flagged it. The file is unknown but likely non-malicious ")
         elif size > max_file:
             st.error(f"❌ The file is too big. Maximum allowed size is {max_file} MB")
+
 
 
 
