@@ -6,15 +6,19 @@ st.set_page_config(
     page_title="TrustScan",
     page_icon="🛡️"
 )
+
 tab1,tab2 = st.tabs(["               Scan URL               ","               Scan Fill              "])
 
 API_KEY = st.secrets["API_google"]
 API = st.secrets["API_virus"]
+URL = st.text_input("enter your URl :")
+if not URL.startswith("https://") or not URL.startswith("http://"):
+    st.error("Enter a valid URL")
+    st.stop()
 
 with tab1:
     st.title(" Scan URL ")
 
-    URL = st.text_input("enter your URl :")
     danger_words = [
         "malicious",
         "phishing",
@@ -89,8 +93,9 @@ with tab1:
 
                 return "safe"
 
-        except vt.APIError:
-            st.error("Enter real link ❌")
+        except Exception as e:
+            st.write(e)
+
 
     choose = st.radio(
         "choose where you want to check your link :",
@@ -149,6 +154,7 @@ with tab2:
                    st.info("ℹ No engine flagged it. The file is unknown but likely non-malicious ")
         elif size > max_file:
             st.error(f"❌ The file is too big. Maximum allowed size is {max_file} MB")
+
 
 
 
