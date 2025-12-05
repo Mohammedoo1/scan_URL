@@ -133,7 +133,7 @@ with tab2:
         if size < max_file:
             if st.button("click me to scan"):
                 with st.spinner("Scanning..."):
-                    with vt.Client(API) as client:
+                    with vt.Client(API_KEY_virustotal) as client:
                         analysis = client.scan_file(uploaded_file, wait_for_completion=True)
 
                 stats = analysis.stats
@@ -152,6 +152,7 @@ with tab2:
                     st.info("ℹ No engine flagged it. The file is unknown but likely non-malicious ")
         elif size > max_file:
             st.error(f"❌ The file is too big. Maximum allowed size is {max_file} MB")
+
 
 
 
