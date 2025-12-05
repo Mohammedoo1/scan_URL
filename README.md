@@ -21,4 +21,8 @@ It uses **Google Safe Browsing** and **VirusTotal** to detect malware, phishing,
 🛠️ Installation
 Install the required libraries:
 
-pip install streamlit vt-py requests
+```
+pip install streamlit
+pip install vt-py
+pip install request
+```
