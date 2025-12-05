@@ -7,16 +7,14 @@ st.set_page_config(
     page_icon="🛡️"
 )
 
-tab1,tab2 = st.tabs(["               Scan URL               ","               Scan Fill              "])
+tab1, tab2 = st.tabs(["               Scan URL               ", "               Scan Fill              "])
 
-API_KEY = st.secrets["API_google"]
-API = st.secrets["API_virus"]
-
+API_KEY_google = st.secrets["API_google"]
+API_KEY_virustotal = st.secrets["API_virus_total"]
 
 with tab1:
-    st.title(" Scan your URL ")
+    st.title(" Scan URL ")
     URL = st.text_input("enter your URl :")
-    
 
     danger_words = [
         "malicious",
@@ -28,6 +26,7 @@ with tab1:
         "spam",
         "dangerous",
     ]
+
 
     def scan_g(URL):
         try:
@@ -41,7 +40,7 @@ with tab1:
             }
             with st.spinner("Scanning..."):
                 response = rq.post(
-                    f"https://safebrowsing.googleapis.com/v4/threatMatches:find?key={API_KEY}",
+                    f"https://safebrowsing.googleapis.com/v4/threatMatches:find?key={API_KEY_google}",
                     json=data
                 )
 
@@ -57,8 +56,9 @@ with tab1:
         except Exception as e:
             st.write(e)
 
+
     def scan(URL):
-        client = vt.Client(API)
+        client = vt.Client(API_KEY_virustotal)
         tables = []
         is_dangerous = False
 
@@ -98,7 +98,7 @@ with tab1:
 
     choose = st.radio(
         "choose where you want to check your link :",
-        ["🛡️ VirusTotal Scan ", "🔍 Google Safe Browsing Scan ", "Both (for deep scan)"]
+        ["🛡️ VirusTotal Scan", "🔍 Google Safe Browsing Scan", "Both (for deep scan)"]
     )
 
     if st.button("start scanning"):
@@ -127,12 +127,11 @@ with tab1:
                 st.warning("⚠ Maybe it is risky, don't open it ")
 
 with tab2:
-
     st.title("Scan your File")
-    max_file=30
+    max_file = 30
     uploaded_file = st.file_uploader("Choose ypur file :", type=None)
     if uploaded_file is not None:
-        size= uploaded_file.size / (1024*1024)
+        size = uploaded_file.size / (1024 * 1024)
         if size < max_file:
             if st.button("click me to scan"):
                 with st.spinner("Scanning..."):
@@ -146,20 +145,15 @@ with tab2:
                 harmless = stats.get("harmless", 0)
 
                 if malicious > 0:
-                   st.error("⚠ It's a malicious file")
+                    st.error("⚠ It's a malicious file")
                 elif suspicious > 0:
-                   st.warning("⚠ It's a suspicious file")
+                    st.warning("⚠ It's a suspicious file")
                 elif undetected > 0 and harmless > 0:
-                   st.success("✔ It is save")
+                    st.success("✔ It is save")
                 else:
-                   st.info("ℹ No engine flagged it. The file is unknown but likely non-malicious ")
+                    st.info("ℹ No engine flagged it. The file is unknown but likely non-malicious ")
         elif size > max_file:
             st.error(f"❌ The file is too big. Maximum allowed size is {max_file} MB")
-
-
-
-
-
 
 
 
